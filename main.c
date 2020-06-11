@@ -20,7 +20,6 @@ int main(int argc, char** args) {
                 printf("Couldn't open file. Exiting program\n");
                 exit(1);
             } else {
-                char* misspelled[MAX_MISSPELLED] = {0};
                 n = check_words(fp, hashtable, misspelled);
                 printf("%d\n", n);
                 fclose(fp);
