@@ -1,1 +1,1 @@
-# CS9163-Unit-1
+[![Build Status](https://travis-ci.com/farihasyed/CS9163-Unit-1.svg?branch=master)](https://travis-ci.com/farihasyed/CS9163-Unit-1)
