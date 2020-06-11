@@ -6,34 +6,19 @@
 #include "dictionary.h"
 
 int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]) {
-    int n = -1;
+    int n = 0;
     if(fp == NULL) {
         return -1;
     } else {
         char word[LENGTH + 1];
         while(fscanf(fp, "%[a-zA-Z]%*[^a-zA-Z]", word) == 1) {
             if(!check_word(word, hashtable)) {
-                word[0] = tolower(word[0]);
-                if(!check_word(word, hashtable)) {
-                    n++;
-                    printf("%s is not spelled correctly\n", word);
-                    misspelled[n] = malloc(sizeof(word));
-                    strcpy(misspelled[n], word);
-                }
-                else {
-                    printf("%s is spelled correctly\n", word);
-                }
-            }
-            else {
-                printf("%s is spelled correctly\n", word);
+                misspelled[n] = malloc(sizeof(word));
+                strcpy(misspelled[n++], word);
             }
         }
     }
-    int i;
-    for (i = 0; i < n + 1; i++) {
-        printf("%s\n", misspelled[i]);
-    }
-    return n + 1;
+    return n;
 }
 
 bool check_word(const char* word, hashmap_t hashtable[]) {
@@ -46,6 +31,25 @@ bool check_word(const char* word, hashmap_t hashtable[]) {
             current = current->next;
         }
     }
+    
+    int i;
+    char lowercase[LENGTH + 1];
+    strcpy(lowercase, word);
+    
+    for (i = 0; i < strlen(word); i++) {
+        lowercase[i] = tolower(lowercase[i]);
+    }
+    
+    bucket = hash_function(lowercase);
+    current = hashtable[bucket];
+    while(current != NULL) {
+        if(strcmp(lowercase, current->word) == 0) {
+            return true;
+        } else {
+            current = current->next;
+        }
+    }
+    
     free(current);
     current = NULL;
     return false;
@@ -53,7 +57,6 @@ bool check_word(const char* word, hashmap_t hashtable[]) {
 
 void free_memory(hashmap_t hashtable[], char* misspelled[], int n) {
     int i;
-    int j = 0;
     struct node* current;
     struct node* next;
     for (i = 0; i < HASH_SIZE; i++) {
@@ -62,7 +65,6 @@ void free_memory(hashmap_t hashtable[], char* misspelled[], int n) {
             next = current->next;
             free(current);
             current = next;
-            j++;
         }
     }
     current = NULL;
@@ -96,5 +98,3 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[]) {
     }
     return true;
 }
-
-//figure out when/how to free shit
