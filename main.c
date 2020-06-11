@@ -21,7 +21,7 @@ int main(int argc, char** args) {
                 exit(1);
             } else {
                 char* misspelled[MAX_MISSPELLED] = {0};
-                n = checkwords(fp, hashtable, misspelled);
+                n = check_words(fp, hashtable, misspelled);
                 printf("%d\n", n);
                 fclose(fp);
             }

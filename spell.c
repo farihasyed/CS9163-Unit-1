@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 #include "dictionary.h"
 
-int checkwords(FILE* fp, hashmap_t hashtable[], char* misspelled[]) {
+int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]) {
     int n = -1;
     if(fp == NULL) {
         return -1;
