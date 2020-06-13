@@ -7,7 +7,7 @@
 int main(int argc, char** args) {
     char file[LENGTH + 1];
     char dictionary[LENGTH + 1];
-    node* hashtable[HASH_SIZE] = {0};
+    struct node* hashtable[HASH_SIZE] = {0};
     char* misspelled[MAX_MISSPELLED] = {0};
     int n;
     
@@ -17,7 +17,7 @@ int main(int argc, char** args) {
         if(load_dictionary(dictionary, hashtable)){
             FILE* fp;
             if((fp = fopen(file, "r")) == NULL) {
-                printf("Couldn't open file. Exiting program\n");
+                printf("Couldn't open file %s. Exiting program\n", file);
                 exit(1);
             } else {
                 n = check_words(fp, hashtable, misspelled);
