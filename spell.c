@@ -86,23 +86,19 @@ bool check_word(const char* word, hashmap_t hashtable[]) {
     char * copy = malloc(sizeof(word));
     strcpy(copy, word);
     copy = removePunctuation(copy);
-    
-    if (strlen(copy) == 0) {
-        return false;
-    }
-    
-    if (isNumber(copy)) {
-        return true;
-    }
-  
-    if (!findWord(copy, hashtable)) {
-        copy = toLowercase(copy);
-        return findWord(copy, hashtable);
+    bool isNum = isNumber(copy);
+    bool isPresent = false;
+    if (!isNum) {
+        isPresent = findWord(copy, hashtable);
+        if (!isPresent) {
+            copy = toLowercase(copy);
+            isPresent = findWord(copy, hashtable);
+        }
     }
     
     free(copy);
     copy = NULL;
-    return true;
+    return isNum || isPresent;
 }
 
 void free_memory(hashmap_t hashtable[], char* misspelled[], int n) {
