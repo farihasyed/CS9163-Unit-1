@@ -6,6 +6,7 @@
 #define TESTDICT "test_wordlist.txt"
 
 START_TEST(test_dictionary_normal)
+{
     hashmap_t hashtable[HASH_SIZE];
     ck_assert(load_dictionary(TESTDICT, hashtable));
     const char* correct_word = "hello";
@@ -16,6 +17,7 @@ START_TEST(test_dictionary_normal)
 END_TEST
 
 START_TEST(test_check_word_normal)
+{
     hashmap_t hashtable[HASH_SIZE];
     load_dictionary(DICTIONARY, hashtable);
     const char* correct_word = "Justice";
