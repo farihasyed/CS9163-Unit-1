@@ -15,7 +15,7 @@ test.o: test_main.c
 main.o: main.c
 	$(CC) $(CFLAGS) -c main.c
 
-test: dictionary.o spell.o test_main.o
+test: dictionary.o spell.o test.o
 	$(CC) -Wall -o test_main test_main.o spell.o dictionary.o -lcheck -lm -lrt -lpthread -lsubunit
 	./test_main
 
