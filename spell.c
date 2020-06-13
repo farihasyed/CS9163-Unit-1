@@ -16,10 +16,8 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]) {
         return -1;
     } else {
         while((read = getline(&line, &length, fp)) != -1) {
-            printf("line: %s", line);
             word = strtok(line, " ");
             while (word != NULL) {
-                printf("word: %s\n", word);
                 if(!check_word(word, hashtable)) {
                     misspelled[n] = malloc(sizeof(word));
                     strcpy(misspelled[n++], word);
@@ -89,7 +87,7 @@ bool check_word(const char* word, hashmap_t hashtable[]) {
     strcpy(copy, word);
     copy = removePunctuation(copy);
     
-    if(strlen(copy) == 0) {
+    if (strlen(copy) == 0) {
         return false;
     }
     
