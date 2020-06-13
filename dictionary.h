@@ -94,4 +94,6 @@ int hash_function(const char* word);
 
 void free_memory(hashmap_t hashtable[], char* misspelled[], int n);
 
+bool findWord(const char* word, hashmap_t hashtable[]);
+
 #endif // DICTIONARY_H
