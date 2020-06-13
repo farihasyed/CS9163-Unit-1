@@ -1,4 +1,4 @@
-/*#include <check.h>
+#include <check.h>
 #include "dictionary.h"
 #include <stdlib.h>
 
@@ -6,24 +6,24 @@
 #define TESTDICT "test_wordlist.txt"
 
 START_TEST(test_dictionary_normal)
-{
     hashmap_t hashtable[HASH_SIZE];
     ck_assert(load_dictionary(TESTDICT, hashtable));
-    // Here we can test if certain words ended up in certain buckets
-    // to ensure that our load_dictionary works as intended. I leave
-    // this as an exercise.
+    const char* correct_word = "hello";
+    const char* incorrect_word = "wordl";
+    ck_assert(findWord(correct_word, hashtable));
+    ck_assert(!findWord(incorrect_word, hashtable));
 }
 END_TEST
 
 START_TEST(test_check_word_normal)
-{
     hashmap_t hashtable[HASH_SIZE];
     load_dictionary(DICTIONARY, hashtable);
     const char* correct_word = "Justice";
     const char* punctuation_word_2 = "pl.ace";
+    const char* quote_word = "\"hello";
     ck_assert(check_word(correct_word, hashtable));
     ck_assert(!check_word(punctuation_word_2, hashtable));
-    // Test here: What if a word begins and ends with "?
+    ck_assert(check_word(quote_word, hashtable));
 }
 END_TEST
 
@@ -49,17 +49,17 @@ START_TEST(test_check_words_normal)
 }
 END_TEST
 
-Suite *;
+Suite *
 check_word_suite(void)
 {
     Suite * suite;
     TCase * check_word_case;
     suite = suite_create("check_word");
     check_word_case = tcase_create("Core");
+    tcase_add_test(check_word_case, test_dictionary_normal);
     tcase_add_test(check_word_case, test_check_word_normal);
     tcase_add_test(check_word_case, test_check_words_normal);
     suite_add_tcase(suite, check_word_case);
-
     return suite;
 }
 
@@ -77,4 +77,3 @@ main(void)
     srunner_free(runner);
     return (failed == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
 }
-*/
