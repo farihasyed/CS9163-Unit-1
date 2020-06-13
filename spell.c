@@ -7,58 +7,110 @@
 
 int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]) {
     int n = 0;
-    if(fp == NULL) {
+    ssize_t read;
+    char * line = NULL;
+    size_t length = 0;
+    char * word = NULL;
+    
+    if (fp == NULL) {
         return -1;
     } else {
-        char word[LENGTH + 1];
-        while(fscanf(fp, "%[a-zA-Z]%*[^a-zA-Z]", word) == 1) {
-            if(!check_word(word, hashtable)) {
-                misspelled[n] = malloc(sizeof(word));
-                strcpy(misspelled[n++], word);
+        while((read = getline(&line, &length, fp)) != -1) {
+            printf("line: %s", line);
+            word = strtok(line, " ");
+            while (word != NULL) {
+                printf("word: %s\n", word);
+                if(!check_word(word, hashtable)) {
+                    misspelled[n] = malloc(sizeof(word));
+                    strcpy(misspelled[n++], word);
+                    printf("%s is misspelled\n", word);
+                } else {
+                    printf("%s is spelled correctly\n", word);
+                }
+                word = strtok(NULL, " ");
             }
         }
     }
+    free(line);
+    free(word);
+    line = NULL;
+    word = NULL;
     return n;
 }
 
-bool check_word(const char* word, hashmap_t hashtable[]) {
+bool isNumber(const char* word) {
+    bool hasDigit = false;
+    bool hasLetter = false;
+    for (; *word; word++) {
+        if (!isdigit(*word)) {
+            hasLetter = true;
+        } else {
+            hasDigit = true;
+        }
+    }
+    return hasDigit && !hasLetter;
+}
+
+char* removePunctuation(char* word) {
+    while (ispunct(*word)) {
+        memmove(word, word + 1, strlen(word));
+    }
+    while (ispunct(word[strlen(word) - 1]) || isspace(word[strlen(word) - 1])) {
+        word[strlen(word) - 1] = '\0';
+    }
+    return word;
+}
+
+char* toLowercase(char* word) {
+    for (char* t = word; *t; t++) {
+        *t = tolower(*t);
+    }
+    return word;
+}
+
+bool findWord(const char* word, hashmap_t hashtable[]) {
     int bucket = hash_function(word);
     struct node* current = hashtable[bucket];
-    while(current != NULL) {
-        if(strcmp(word, current->word) == 0) {
+    while (current != NULL) {
+        if (strcmp(word, current->word) == 0) {
             return true;
         } else {
             current = current->next;
         }
     }
-    
-    int i;
-    char lowercase[LENGTH + 1];
-    strcpy(lowercase, word);
-    
-    for (i = 0; i < strlen(word); i++) {
-        lowercase[i] = tolower(lowercase[i]);
-    }
-    
-    bucket = hash_function(lowercase);
-    current = hashtable[bucket];
-    while(current != NULL) {
-        if(strcmp(lowercase, current->word) == 0) {
-            return true;
-        } else {
-            current = current->next;
-        }
-    }
-    
     free(current);
     current = NULL;
     return false;
 }
 
+
+bool check_word(const char* word, hashmap_t hashtable[]) {
+    char * copy = malloc(sizeof(word));
+    strcpy(copy, word);
+    copy = removePunctuation(copy);
+    
+    if(strlen(copy) == 0) {
+        return false;
+    }
+    
+    if (isNumber(copy)) {
+        return true;
+    }
+  
+    if (!findWord(copy, hashtable)) {
+        copy = toLowercase(copy);
+        return findWord(copy, hashtable);
+    }
+    
+    free(copy);
+    copy = NULL;
+    return true;
+}
+
 void free_memory(hashmap_t hashtable[], char* misspelled[], int n) {
     int i;
-    struct node* current;
-    struct node* next;
+    struct node* current = NULL;
+    struct node* next = NULL;
     for (i = 0; i < HASH_SIZE; i++) {
         current = hashtable[i];
         while(current != NULL) {
@@ -79,15 +131,15 @@ void free_memory(hashmap_t hashtable[], char* misspelled[], int n) {
 bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[]) {
     FILE* fp;
     int index;
-    if((fp = fopen(dictionary_file, "r")) == NULL) {
+    if ((fp = fopen(dictionary_file, "r")) == NULL) {
         return false;
     } else {
         char word[LENGTH + 1];
         struct node** bucket;
-        while(fscanf(fp, "%s", word) == 1) {
+        while (fscanf(fp, "%s", word) == 1) {
             index = hash_function(word);
             bucket = &hashtable[index];
-            while(*bucket != NULL) {
+            while (*bucket != NULL) {
                 bucket = &(*bucket)->next;
             }
             *bucket = malloc(sizeof(**bucket));
