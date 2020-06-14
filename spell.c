@@ -15,15 +15,12 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]) {
     if (fp == NULL) {
         return -1;
     } else {
-        while((read = getline(&line, &length, fp)) != -1) {
+        while ((read = getline(&line, &length, fp)) != -1) {
             word = strtok(line, " ");
             while (word != NULL) {
-                if(!check_word(word, hashtable)) {
+                if (!check_word(word, hashtable)) {
                     misspelled[n] = malloc(sizeof(word));
                     strcpy(misspelled[n++], word);
-                    printf("%s is misspelled\n", word);
-                } else {
-                    printf("%s is spelled correctly\n", word);
                 }
                 word = strtok(NULL, " ");
             }
@@ -107,7 +104,7 @@ void free_memory(hashmap_t hashtable[], char* misspelled[], int n) {
     struct node* next = NULL;
     for (i = 0; i < HASH_SIZE; i++) {
         current = hashtable[i];
-        while(current != NULL) {
+        while (current != NULL) {
             next = current->next;
             free(current);
             current = next;
