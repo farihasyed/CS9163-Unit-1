@@ -96,4 +96,10 @@ void free_memory(hashmap_t hashtable[], char* misspelled[], int n);
 
 bool findWord(const char* word, hashmap_t hashtable[]);
 
+bool isNumber(const char* word);
+
+char* removePunctuation(char* word);
+
+char* toLowercase(char* word);
+
 #endif // DICTIONARY_H
