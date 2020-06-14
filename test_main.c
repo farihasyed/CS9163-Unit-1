@@ -121,7 +121,7 @@ START_TEST(test_toLowercase_normal)
     
     int i;
     for (i = 0; i < 2; i++) {
-        ck_assert(strcmp(removePunctuation(test_cases[i]), lowercase[i]) == 0);
+        ck_assert(strcmp(toLowercase(test_cases[i]), lowercase[i]) == 0);
     }
 }
 END_TEST
@@ -140,7 +140,7 @@ START_TEST(test_toLowercase_edge)
     
     int i;
     for (i = 0; i < 3; i++) {
-        ck_assert(strcmp(removePunctuation(test_cases[i]), lowercase[i]) == 0);
+        ck_assert(strcmp(toLowercase(test_cases[i]), lowercase[i]) == 0);
     }
 }
 END_TEST
