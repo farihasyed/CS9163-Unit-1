@@ -34,16 +34,12 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]) {
 }
 
 bool isNumber(const char* word) {
-    bool hasDigit = false;
-    bool hasLetter = false;
     for (; *word; word++) {
         if (!isdigit(*word)) {
-            hasLetter = true;
-        } else {
-            hasDigit = true;
+            return false;
         }
     }
-    return hasDigit && !hasLetter;
+    return true;
 }
 
 char* removePunctuation(char* word) {
@@ -83,19 +79,23 @@ bool check_word(const char* word, hashmap_t hashtable[]) {
     char * copy = malloc(sizeof(word));
     strcpy(copy, word);
     copy = removePunctuation(copy);
-    bool isNum = isNumber(copy);
-    bool isPresent = false;
-    if (!isNum) {
+    if (strlen(copy) == 0) {
+        return false;
+    }
+    
+    if (isNumber(copy)) {
+        return true;
+    }
+    
+    bool isPresent = findWord(copy, hashtable);
+    if (!isPresent) {
+        copy = toLowercase(copy);
         isPresent = findWord(copy, hashtable);
-        if (!isPresent) {
-            copy = toLowercase(copy);
-            isPresent = findWord(copy, hashtable);
-        }
     }
     
     free(copy);
     copy = NULL;
-    return isNum || isPresent;
+    return isPresent;
 }
 
 void free_memory(hashmap_t hashtable[], char* misspelled[], int n) {
