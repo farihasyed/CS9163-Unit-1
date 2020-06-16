@@ -23,7 +23,4 @@ prog: dictionary.o spell.o main.o
 	$(CC) -Wall -o spell_check dictionary.o spell.o main.o
 
 clean:
-	rm dictionary.o spell.o main.o test_main.o
-
-cleanall:clean
-	rm spell_check
+	rm dictionary.o spell.o main.o test_main.o spell_check
