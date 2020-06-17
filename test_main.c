@@ -68,35 +68,70 @@ END_TEST
 
 START_TEST(test_removePunctuation_normal)
 {
-    ck_assert(strcmp(toLowercase("hello world!"), "hello world") == 0);
-    ck_assert(strcmp(toLowercase("\"quotes\""), "quotes") == 0);
-    ck_assert(strcmp(toLowercase("123%"), "123") == 0);
+    char test1[] = "hello world!";
+    char test2[] = "\"quotes\"";
+    char test3[] = "123%";
+    char correct1[] = "hello world";
+    char correct2[] = "quotes";
+    char correct3[] = "123";
     
+    ck_assert(strcmp(toLowercase(test1), correct1) == 0);
+    ck_assert(strcmp(toLowercase(test2), correct2) == 0);
+    ck_assert(strcmp(toLowercase(test3), correct3) == 0);
 }
 END_TEST
 
 START_TEST(test_removePunctuation_edge)
 {
-    ck_assert(strcmp(toLowercase("!@#$hello world!@#$\""), "hello world") == 0);
-    ck_assert(strcmp(toLowercase("@#123"), "123") == 0);
-    ck_assert(strcmp(toLowercase("abc123"), "abc123") == 0);
-    ck_assert(strcmp(toLowercase("123abc"), "123abc") == 0);
-    ck_assert(strcmp(toLowercase("#$%^"), "") == 0);
+    ck_assert(strcmp(toLowercase(), ) == 0);
+    ck_assert(strcmp(toLowercase(), "123") == 0);
+    ck_assert(strcmp(toLowercase(), "abc123") == 0);
+    ck_assert(strcmp(toLowercase(), "123abc") == 0);
+    ck_assert(strcmp(toLowercase(), "") == 0);
+    
+    char test1[] = "!@#$hello world!@#$\"";
+    char test2[] = "@#123";
+    char test3[] = "abc123";
+    char test4[] = "123abc";
+    char test5[] = "#$%^";
+    char correct1[] = "hello world";
+    char correct2[] = "123";
+    char correct3[] = "abc123";
+    char correct4[] = "123abc";
+    char correct5[] = "";
+    
+    ck_assert(strcmp(toLowercase(test1), correct1) == 0);
+    ck_assert(strcmp(toLowercase(test2), correct2) == 0);
+    ck_assert(strcmp(toLowercase(test3), correct3) == 0);
+    ck_assert(strcmp(toLowercase(test4), correct4) == 0);
+    ck_assert(strcmp(toLowercase(test5), correct5) == 0);
 }
 END_TEST
 
 START_TEST(test_toLowercase_normal)
 {
-    ck_assert(strcmp(toLowercase("Computer"), "computer") == 0);
-    ck_assert(strcmp(toLowercase("Science"), "science") == 0);
+    char test1[] = "Computer";
+    char test2[] = "Science";
+    char correct1[] = "computer";
+    char correct2[] = "science";
+    
+    ck_assert(strcmp(toLowercase(test1), correct1) == 0);
+    ck_assert(strcmp(toLowercase(test2), correct2) == 0);
 }
 END_TEST
 
 START_TEST(test_toLowercase_edge)
 {
-    ck_assert(strcmp(toLowercase("HeLLo WoRLD"), "hello world") == 0);
-    ck_assert(strcmp(toLowercase("SWITCH"), "switch") == 0);
-    ck_assert(strcmp(toLowercase("languagE"), "language") == 0);
+    char test1[] = "HeLLo WoRLD";
+    char test2[] = "SWITCH";
+    char test3[] = "languagE";
+    char correct1[] = "hello world";
+    char correct2[] = "switch";
+    char correct3[] = "language";
+    
+    ck_assert(strcmp(toLowercase(test1), correct1) == 0);
+    ck_assert(strcmp(toLowercase(test2), correct2) == 0);
+    ck_assert(strcmp(toLowercase(test3), correct3) == 0);
 }
 END_TEST
 
