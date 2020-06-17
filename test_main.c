@@ -68,82 +68,35 @@ END_TEST
 
 START_TEST(test_removePunctuation_normal)
 {
-    char* test_cases[3];
-    test_cases[0] = "hello world!";
-    test_cases[1] = "\"quotes\"";
-    test_cases[2] = "123%";
-    
-    char* no_punctuation[3];
-    no_punctuation[0] = "hello world";
-    no_punctuation[1] = "quotes";
-    no_punctuation[2] = "123";
-    
-    int i;
-    for (i = 0; i < 3; i++) {
-        ck_assert(strcmp(removePunctuation(test_cases[i]), no_punctuation[i]) == 0);
-    }
+    ck_assert(strcmp(toLowercase("hello world!"), "hello world") == 0);
+    ck_assert(strcmp(toLowercase("\"quotes\""), "quotes") == 0);
+    ck_assert(strcmp(toLowercase("123%"), "123") == 0);
     
 }
 END_TEST
 
 START_TEST(test_removePunctuation_edge)
 {
-    char* test_cases[5];
-    test_cases[0] = "!@#$hello world!@#$\"";
-    test_cases[1] = "@#123";
-    test_cases[2] = "abc123";
-    test_cases[3] = "123abc";
-    test_cases[4] = "#$%^";
-    
-    char* no_punctuation[5];
-    no_punctuation[0] = "hello world";
-    no_punctuation[1] = "123";
-    no_punctuation[2] = "abc123";
-    no_punctuation[3] = "123abc";
-    no_punctuation[4] = "";
-    
-    int i;
-    for (i = 0; i < 5; i++) {
-        printf("%s\n", removePunctuation(test_cases[i]));
-        ck_assert(strcmp(removePunctuation(test_cases[i]), no_punctuation[i]) == 0);
-    }
+    ck_assert(strcmp(toLowercase("!@#$hello world!@#$\""), "hello world") == 0);
+    ck_assert(strcmp(toLowercase("@#123"), "123") == 0);
+    ck_assert(strcmp(toLowercase("abc123"), "abc123") == 0);
+    ck_assert(strcmp(toLowercase("123abc"), "123abc") == 0);
+    ck_assert(strcmp(toLowercase("#$%^"), "") == 0);
 }
 END_TEST
 
 START_TEST(test_toLowercase_normal)
 {
-    char* test_cases[2];
-    test_cases[0] = "Computer";
-    test_cases[1] = "Science";
-    
-    char* lowercase[2];
-    lowercase[0] = "computer";
-    lowercase[1] = "science";
-    
-    int i;
-    for (i = 0; i < 2; i++) {
-        printf("%s\n", toLowercase(test_cases[i]));
-        ck_assert(strcmp(toLowercase(test_cases[i]), lowercase[i]) == 0);
-    }
+    ck_assert(strcmp(toLowercase("Computer"), "computer") == 0);
+    ck_assert(strcmp(toLowercase("Science"), "science") == 0);
 }
 END_TEST
 
 START_TEST(test_toLowercase_edge)
 {
-    char* test_cases[3];
-    test_cases[0] = "HeLLo WoRLD";
-    test_cases[1] = "SWITCH";
-    test_cases[2] = "languagE";
-    
-    char* lowercase[3];
-    lowercase[0] = "hello world";
-    lowercase[1] = "switch";
-    lowercase[2] = "language";
-    
-    int i;
-    for (i = 0; i < 3; i++) {
-        ck_assert(strcmp(toLowercase(test_cases[i]), lowercase[i]) == 0);
-    }
+    ck_assert(strcmp(toLowercase("HeLLo WoRLD"), "hello world") == 0);
+    ck_assert(strcmp(toLowercase("SWITCH"), "switch") == 0);
+    ck_assert(strcmp(toLowercase("languagE"), "language") == 0);
 }
 END_TEST
 
