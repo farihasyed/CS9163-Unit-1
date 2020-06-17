@@ -18,10 +18,15 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]) {
         while ((read = getline(&line, &length, fp)) != -1) {
             word = strtok(line, " ");
             while (word != NULL) {
-                if (!check_word(word, hashtable)) {
-                    misspelled[n] = malloc(sizeof(word));
-                    strcpy(misspelled[n++], word);
+                char * copy = malloc(sizeof(word));
+                strcpy(copy, word);
+                copy = removePunctuation(copy);
+                if (!check_word(copy, hashtable)) {
+                    misspelled[n] = malloc(sizeof(copy));
+                    strcpy(misspelled[n++], copy);
                 }
+                free(copy);
+                copy = NULL;
                 word = strtok(NULL, " ");
             }
         }
@@ -76,23 +81,27 @@ bool findWord(const char* word, hashmap_t hashtable[]) {
 
 
 bool check_word(const char* word, hashmap_t hashtable[]) {
+    if (strlen(word) == 0) {
+        return false;
+    }
+    
+    if (isNumber(word)) {
+        return true;
+    }
+    
     char * copy = malloc(sizeof(word));
     strcpy(copy, word);
-    copy = removePunctuation(copy);
-    bool isEmpty = (strlen(copy) == 0);
-    bool isNum = isNumber(copy);
     bool isPresent = false;
-    if (!isNum) {
+    isPresent = findWord(copy, hashtable);
+    
+    if (!isPresent) {
+        copy = toLowercase(copy);
         isPresent = findWord(copy, hashtable);
-        if (!isPresent) {
-            copy = toLowercase(copy);
-            isPresent = findWord(copy, hashtable);
-        }
     }
     
     free(copy);
     copy = NULL;
-    return !isEmpty && (isNum || isPresent);
+    return isPresent;
 }
 
 void free_memory(hashmap_t hashtable[], char* misspelled[], int n) {
@@ -135,6 +144,7 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[]) {
             (*bucket)->next = NULL;
         }
         fclose(fp);
+        
     }
     return true;
 }
