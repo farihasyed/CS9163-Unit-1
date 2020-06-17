@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #define DICTIONARY "wordlist.txt"
-#define TESTDICT "test_wordlist.txt"
+#define TESTDICT "afl-fuzzer/in/test_wordlist.txt"
 
 START_TEST(test_dictionary_normal)
 {
@@ -161,7 +161,7 @@ START_TEST(test_check_words_normal)
     expected[1] = "skyn";
     expected[2] = "betta";
     char *misspelled[MAX_MISSPELLED];
-    FILE *fp = fopen("test1.txt", "r");
+    FILE *fp = fopen("afl-fuzzer/in/test1.txt", "r");
     int num_misspelled = check_words(fp, hashtable, misspelled);
     ck_assert(num_misspelled == 3);
     bool test = strlen(misspelled[0]) == strlen(expected[0]);
