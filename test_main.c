@@ -83,12 +83,6 @@ END_TEST
 
 START_TEST(test_removePunctuation_edge)
 {
-    ck_assert(strcmp(toLowercase(), ) == 0);
-    ck_assert(strcmp(toLowercase(), "123") == 0);
-    ck_assert(strcmp(toLowercase(), "abc123") == 0);
-    ck_assert(strcmp(toLowercase(), "123abc") == 0);
-    ck_assert(strcmp(toLowercase(), "") == 0);
-    
     char test1[] = "!@#$hello world!@#$\"";
     char test2[] = "@#123";
     char test3[] = "abc123";
