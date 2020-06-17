@@ -75,9 +75,9 @@ START_TEST(test_removePunctuation_normal)
     char correct2[] = "quotes";
     char correct3[] = "123";
     
-    ck_assert(strcmp(toLowercase(test1), correct1) == 0);
-    ck_assert(strcmp(toLowercase(test2), correct2) == 0);
-    ck_assert(strcmp(toLowercase(test3), correct3) == 0);
+    ck_assert(strcmp(removePunctuation(test1), correct1) == 0);
+    ck_assert(strcmp(removePunctuation(test2), correct2) == 0);
+    ck_assert(strcmp(removePunctuation(test3), correct3) == 0);
 }
 END_TEST
 
@@ -94,11 +94,11 @@ START_TEST(test_removePunctuation_edge)
     char correct4[] = "123abc";
     char correct5[] = "";
     
-    ck_assert(strcmp(toLowercase(test1), correct1) == 0);
-    ck_assert(strcmp(toLowercase(test2), correct2) == 0);
-    ck_assert(strcmp(toLowercase(test3), correct3) == 0);
-    ck_assert(strcmp(toLowercase(test4), correct4) == 0);
-    ck_assert(strcmp(toLowercase(test5), correct5) == 0);
+    ck_assert(strcmp(removePunctuation(test1), correct1) == 0);
+    ck_assert(strcmp(removePunctuation(test2), correct2) == 0);
+    ck_assert(strcmp(removePunctuation(test3), correct3) == 0);
+    ck_assert(strcmp(removePunctuation(test4), correct4) == 0);
+    ck_assert(strcmp(removePunctuation(test5), correct5) == 0);
 }
 END_TEST
 
