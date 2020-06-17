@@ -91,8 +91,7 @@ bool check_word(const char* word, hashmap_t hashtable[]) {
     
     char * copy = malloc(sizeof(word));
     strcpy(copy, word);
-    bool isPresent = false;
-    isPresent = findWord(copy, hashtable);
+    bool isPresent = findWord(copy, hashtable);
     
     if (!isPresent) {
         copy = toLowercase(copy);
