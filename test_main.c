@@ -16,6 +16,7 @@ START_TEST(test_dictionary_edge)
 {
     hashmap_t hashtable[HASH_SIZE] = {0};
     ck_assert(!load_dictionary("random_file.txt", hashtable));
+    ck_assert(!load_dictionary("trying_to_overflow_buffer_with_a_really_long_file_name_which_is_something_a_hacker_might_do_almost_at_limit.txt", hashtable));
 }
 END_TEST
 
