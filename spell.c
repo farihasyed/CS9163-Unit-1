@@ -7,15 +7,13 @@
 
 int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]) {
     int n = 0;
-    ssize_t read;
-    char * line = NULL;
-    size_t length = 0;
+    char line[LENGTH + 1];
     char * word = NULL;
     
     if (fp == NULL) {
         return -1;
     } else {
-        while ((read = getline(&line, &length, fp)) != -1) {
+        while (fgets(line, LENGTH, fp) != NULL) {
             word = strtok(line, " ");
             while (word != NULL) {
                 char * copy = malloc(sizeof(word));
@@ -31,9 +29,7 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]) {
             }
         }
     }
-    free(line);
     free(word);
-    line = NULL;
     word = NULL;
     return n;
 }
@@ -127,6 +123,12 @@ void free_memory(hashmap_t hashtable[], char* misspelled[], int n) {
 bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[]) {
     FILE* fp;
     int index;
+    
+    if (strlen(dictionary_file) > FILE_LENGTH) {
+        printf("%s: dictionary file name too long. Try again with shorter name\n", dictionary_file);
+        return false;
+    }
+    
     if ((fp = fopen(dictionary_file, "r")) == NULL) {
         return false;
     } else {
@@ -143,7 +145,6 @@ bool load_dictionary(const char* dictionary_file, hashmap_t hashtable[]) {
             (*bucket)->next = NULL;
         }
         fclose(fp);
-        
     }
     return true;
 }

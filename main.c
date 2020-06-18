@@ -5,13 +5,23 @@
 #include "dictionary.h"
 
 int main(int argc, char** args) {
-    char file[LENGTH + 1];
-    char dictionary[LENGTH + 1];
+    char file[FILE_LENGTH + 1];
+    char dictionary[FILE_LENGTH + 1];
     struct node* hashtable[HASH_SIZE] = {0};
     char* misspelled[MAX_MISSPELLED] = {0};
     int n;
     
     if(argc == 3) {
+        if (strlen(args[1]) > FILE_LENGTH) {
+            printf("%s: file name too long. Exiting program\n", args[1]);
+            exit(1);
+        }
+        
+        if (strlen(args[2]) > FILE_LENGTH) {
+            printf("%s: file name too long. Exiting program\n", args[2]);
+            exit(1);
+        }
+        
         strcpy(file, args[1]);
         strcpy(dictionary, args[2]);
         if(load_dictionary(dictionary, hashtable)){
