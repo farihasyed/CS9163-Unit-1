@@ -20,6 +20,8 @@
 
 #define MAX_MISSPELLED 1000
 
+#define FILE_LENGTH 100
+
 typedef struct node
 {
     char word[LENGTH + 1];
