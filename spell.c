@@ -20,8 +20,8 @@ int check_words(FILE* fp, hashmap_t hashtable[], char* misspelled[]) {
                 strcpy(copy, word);
                 copy = removePunctuation(copy);
                 if (!check_word(copy, hashtable)) {
-                    misspelled[n] = malloc(sizeof(word));
-                    strcpy(misspelled[n++], word);
+                    misspelled[n] = malloc(sizeof(copy));
+                    strcpy(misspelled[n++], copy);
                 }
                 free(copy);
                 copy = NULL;

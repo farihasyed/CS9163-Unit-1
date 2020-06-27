@@ -34,7 +34,12 @@ int main(int argc, char** args) {
                 printf("The following %d words were misspelled:\n", n);
                 int i;
                 for (i = 0; i < n; i++) {
-                    printf("%s\n", misspelled[i]);
+                    if (i == n - 1) {
+                        printf("%s\n", misspelled[i]);
+                    } else {
+                        printf("%s, ", misspelled[i]);
+                    }
+                    
                 }
                 fclose(fp);
             }
