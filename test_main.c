@@ -159,7 +159,7 @@ START_TEST(test_check_words_normal)
     load_dictionary(DICTIONARY, hashtable);
     char* expected[3];
     expected[0] = "sogn";
-    expected[1] = "skyn";
+    expected[1] = "skyn,";
     expected[2] = "betta\n";
     char *misspelled[MAX_MISSPELLED];
     FILE *fp = fopen("afl-fuzzer/in/test1.txt", "r");
