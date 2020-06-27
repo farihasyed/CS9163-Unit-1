@@ -160,7 +160,7 @@ START_TEST(test_check_words_normal)
     char* expected[3];
     expected[0] = "sogn";
     expected[1] = "skyn";
-    expected[2] = "betta";
+    expected[2] = "betta\n";
     char *misspelled[MAX_MISSPELLED];
     FILE *fp = fopen("afl-fuzzer/in/test1.txt", "r");
     int num_misspelled = check_words(fp, hashtable, misspelled);
