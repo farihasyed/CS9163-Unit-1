@@ -31,7 +31,11 @@ int main(int argc, char** args) {
                 exit(1);
             } else {
                 n = check_words(fp, hashtable, misspelled);
-                printf("%d\n", n);
+                printf("The following %d words were misspelled:\n", n);
+                int i;
+                for (i = 0; i < n; i++) {
+                    printf("%s\n", misspelled[i]);
+                }
                 fclose(fp);
             }
         } else {
